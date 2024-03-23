@@ -18,4 +18,6 @@ class Admin extends Authenticatable
         'role',
         'shift'
     ];
+
+    public function getAdmin(){}
 }

@@ -1,4 +1,4 @@
-@extends('templates.main')
+@extends('admin.templates.main')
 
 @section('container')
     <div class="overflow-x-auto">
@@ -12,14 +12,14 @@
                     <th class="py-3 px-4">Action</th>
                 </tr>
             </thead>
-            @foreach ($historys as $history)
+            @foreach ($surats as $surat)
                 <tbody class="text-gray-700">
                     <tr>
-                        <td class="py-3 px-4">{{ $history->id }}</td>
-                        <td class="py-3 px-4">{{ $history->id_admin }}</td>
-                        <td class="py-3 px-4">{{ $history->type }}</td>
-                        <td class="py-3 px-4">{{ $history->estimasi }}</td>
-                        <td class="py-3 px-4"><a href="/detailSurat/{{ $history->id }}">Detail</a></td>
+                        <td class="py-3 px-4">{{ $surat->id }}</td>
+                        <td class="py-3 px-4">{{ $surat->id_admin }}</td>
+                        <td class="py-3 px-4">{{ $surat->type }}</td>
+                        <td class="py-3 px-4">{{ $surat->estimasi }}</td>
+                        <td class="py-3 px-4"><a href="/detailSuratAdmin/{{ $surat->id }}">Detail</a></td>
                     </tr>
                 </tbody>
             @endforeach

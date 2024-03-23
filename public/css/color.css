@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+    --red-primary-color: #b6272c;
+    --red-secondary-color: #ed212b;
+    --blue-primary-color: #013056;
+    --blue-secondary-color: #154770;
+    --yellow-primary-color: #8a4f0e;
+    --yellow-secondary-color: #c16a0b;
+    --gray-light-color: #acaaaa;
+    --gray-color: #464646;
+    --gray-heavy-color: #272727;
+}
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+.tx-red {
+    color: var(--red-primary-color);
+}
+
+.tx-red-second {
+    color: var(--red-secondary-color);
+}
+
+.tx-blue {
+    color: var(--blue-primary-color);
+}
+
+.tx-blue-second {
+    color: var(--blue-secondary-color);
+}
+
+.tx-yellow {
+    color: var(--yellow-primary-color);
+}
+
+.tx-yellow-second {
+    color: var(--yellow-secondary-color);
+}
+
+.tx-gray-light {
+    color: var(--gray-light-color);
+}
+
+.tx-gray {
+    color: var(--gray-color);
+}
+
+.tx-gray-light {
+    color: var(--gray-heavy-color);
+}
+
+/* BACKGROUND COLOR */
+
+.bgx-red {
+    background-color: var(--red-primary-color);
+}
+
+.bgx-red-second {
+    background-color: var(--red-secondary-color);
+}
+
+.bgx-blue {
+    background-color: var(--blue-primary-color);
+}
+
+.bgx-blue-second {
+    background-color: var(--blue-secondary-color);
+}
+
+.bgx-yellow {
+    background-color: var(--yellow-primary-color);
+}
+
+.bgx-yellow-second {
+    background-color: var(--yellow-secondary-color);
+}
+
+.bgx-gray-light {
+    background-color: var(--gray-light-color);
+}
+
+.bgx-gray {
+    background-color: var(--gray-color);
+}
+
+.bgx-gray-light {
+    background-color: var(--gray-heavy-color);
+}

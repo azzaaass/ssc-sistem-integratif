@@ -9,19 +9,12 @@ class Surat extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'id_user',
-        'id_admin',
-        'estimasi',
-        'type',
-        'input1',
-        'input2',
-        'input3',
-        'input4',
-        'input5',
-        'input6',
-        'input7',
-    ];
-
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    
 }
