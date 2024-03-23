@@ -9,10 +9,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{-- JQuery --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    {{-- COLOR --}}
-    <link rel="stylesheet" href="{{ asset('css/color.css') }}">
+
+    {{-- Google font --}}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        * {
+            font-family: "Inter", sans-serif;
+        }
+
+        .tx-red {
+            color: #b6272c;
+        }
+
+        .tx-gray {
+            /* color: #464646; */
+            color: #414040;
+        }
+
+        .bgx-gray {
+            /* color: #464646; */
+            background-color: #414040;
+        }
+    </style>
 </head>
+
 <body>
     <nav class="sticky top-0 z-20 bg-white dark:bg-gray-900 shadow">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 lg:px-10 xl:px-20">
@@ -41,59 +64,6 @@
                 <ul
                     class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
-                        <a href="/" class="block p-2 tx-red text-sm font-normal">Dashboard</a>
-                    </li>
-                    <li>
-                        <p id="menu-surat" class="block p-2 tx-gray text-sm font-normal"
-                            onclick="menu_clicked('surat')">Surat
-                            <i class="fa-solid fa-angle-down"></i>
-                        </p>
-                        <div id="sub-menu-surat" class="hidden absolute bg-white shadow mt-8 p-4">
-                            <ul>
-                                <li>
-                                    <a href="/ruangan">
-                                        <p class="block p-2 tx-gray text-sm font-normal">Peminjaman Ruangan</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <p class="block p-2 tx-gray text-sm font-normal">Peminjaman Alat</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <p class="block p-2 tx-gray text-sm font-normal">Mahasiswa Aktif</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <p class="block p-2 tx-gray text-sm font-normal">Pengantar Penelitian</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <p id="menu-pengajuan" class="block p-2 tx-gray text-sm font-normal"
-                            onclick="menu_clicked('pengajuan')">Pengajuan
-                            <i class="fa-solid fa-angle-down"></i>
-                        </p>
-                        <div id="sub-menu-pengajuan" class="hidden absolute bg-white shadow mt-8 p-4">
-                            <ul>
-                                <li>
-                                    <a href="">
-                                        <p class="block p-2 tx-gray text-sm font-normal">Kehilangan KTM</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <p class="block p-2 tx-gray text-sm font-normal">Angsuran BPP</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
                         <p id="menu-pusat-bantuan" class="block p-2 tx-gray text-sm font-normal"
                             onclick="menu_clicked('pusat-bantuan')">Pusat bantuan
                             <i class="fa-solid fa-angle-down"></i>
@@ -114,7 +84,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="/history   " class="block p-2 tx-gray text-sm font-normal">History</a>
+                        <a href="/suratAdmin" class="block p-2 tx-gray text-sm font-normal">History</a>
                     </li>
                 </ul>
             </div>

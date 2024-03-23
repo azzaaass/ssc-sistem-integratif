@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\SuratController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SuratController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [DashboardController::class, 'index'])->middleware('auth:user');
-Route::get('/ruangan', [SuratController::class, 'ruangan'])->middleware('auth:admin', 'role:2');
-Route::post('/prosesRuangan', [SuratController::class, 'prosesRuangan']);
+Route::group(['middleware' => ['auth:user']], function () {
+    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/ruangan', [SuratController::class, 'ruangan']);
+    Route::post('/createSurat', [SuratController::class, 'createSurat']);
+
+    Route::get('/history', [SuratController::class, 'history'])->name('history');
+    Route::get('/detailSurat/{surat:id}', [SuratController::class, 'detailSurat']);
+    Route::post('/requestUpdateSurat', [SuratController::class, 'requestUpdateSurat']);
+    Route::get('/deleteSurat/{surat:id}', [SuratController::class, 'deleteSurat']);
+});
+
+Route::group(['middleware' => ['auth:admin']], function () {
+    // Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/suratAdmin', [SuratController::class, 'suratAdmin']);
+    Route::get('/detailSuratAdmin/{surat:id}', [SuratController::class, 'detailSuratAdmin']);
+    Route::post('/updateSuratRequest', [SuratController::class, 'updateSuratRequest']);
+});
+
 
 // Auth admin
 Route::get('/loginAdmin', [AuthController::class, 'loginAdminForm']);
@@ -30,6 +46,7 @@ Route::get('/register', [AuthController::class, 'registerForm'])->name('register
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/login', [AuthController::class, 'login']);
+
 Route::get('/logout', [AuthController::class, 'logout']);
+
 
