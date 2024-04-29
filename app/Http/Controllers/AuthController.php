@@ -72,7 +72,11 @@ class AuthController extends Controller
         ]);
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect('/suratAdmin');
+            if (Auth::guard('admin')->user()->role == "1") {
+                return redirect('/suratAdmin');
+            } else {
+                return redirect('/suratPic');
+            }
         } else {
             return redirect('/loginAdmin')->with('error', 'Username atau password salah');
         }

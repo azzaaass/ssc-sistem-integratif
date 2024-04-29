@@ -11,7 +11,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{-- JQuery --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     {{-- Google font --}}
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
@@ -84,7 +84,10 @@
                         </div>
                     </li>
                     <li>
-                        <a href="/suratAdmin" class="block p-2 tx-gray text-sm font-normal">History</a>
+                        <a href="/suratPic" class="block p-2 tx-gray text-sm font-normal">Surat</a>
+                    </li>
+                    <li>
+                        <a href="/" class="block p-2 tx-gray text-sm font-normal">History</a>
                     </li>
                 </ul>
             </div>
@@ -96,6 +99,11 @@
                     class="object-cover h-10 w-10 rounded-[50%]">
                 <div id="sub-menu-user" class="absolute hidden bg-white shadow mt-8 px-8 py-4">
                     <ul>
+                        <li>
+                            <a href="">
+                                <p class="block p-2 tx-gray text-sm font-normal">{{ Auth::user()->name }}</p>
+                            </a>
+                        </li>
                         <li>
                             <a href="">
                                 <p class="block p-2 tx-gray text-sm font-normal">Profile</p>
@@ -121,21 +129,7 @@
             } else {
                 $("#sub-menu-" + menu).addClass("hidden");
             }
-
         }
-
-        // submenu / out page clicked
-        $(document).on("click", function(e) {
-            if (!$(e.target).closest("#menu-surat, #sub-menu-surat").length) {
-                $("#sub-menu-surat").addClass("hidden");
-            }
-        });
-        // submenu / out page clicked
-        $(document).on("click", function(e) {
-            if (!$(e.target).closest("#menu-pengajuan, #sub-menu-pengajuan").length) {
-                $("#sub-menu-pengajuan").addClass("hidden");
-            }
-        });
         // submenu / out page clicked
         $(document).on("click", function(e) {
             if (!$(e.target).closest("#menu-pusat-bantuan, #sub-menu-pusat-bantuan").length) {

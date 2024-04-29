@@ -12,10 +12,10 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('surats', function (Blueprint $table) {
+    Schema::create('surats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_user')->references('id')->on('users');
-            $table->foreignId('id_admin')->nullable();
+            $table->foreignId('id_pic')->nullable();
             $table->string('estimasi');
             $table->boolean('status');
             $table->string('type');

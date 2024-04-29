@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Pic;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Surat extends Model
 {
@@ -16,5 +17,13 @@ class Surat extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    
+    public function pic()
+    {
+        return $this->belongsTo(Pic::class, 'id_pic');
+    }
+
+    public function tipe()
+    {
+        return $this->belongsTo(TipeSurat::class, 'type');
+    }
 }
