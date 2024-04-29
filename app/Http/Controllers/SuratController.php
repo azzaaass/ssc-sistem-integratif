@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pic;
 use App\Models\User;
 use App\Models\Surat;
 use App\Models\StatusSurat;
@@ -63,10 +64,10 @@ class SuratController extends Controller
 
     public function history()
     {
-        $historys = User::find(Auth::id())->surat;
+        $surats = User::find(Auth::id())->surat()->with('tipe')->where('status', '0')->paginate(8);
         return view('history.index', [
             "title" => "SSC | History",
-            "historys" => $historys
+            "surats" => $surats
         ]);
     }
 
@@ -134,7 +135,7 @@ class SuratController extends Controller
 
     public function suratAdmin()
     {
-        $surats = Surat::where('status', '0')->get();
+        $surats = Surat::where('status', '0')->paginate(8);
         return view('admin.surat.index', [
             "title" => "SSC | Surat Admin",
             "surats" => $surats
@@ -162,9 +163,10 @@ class SuratController extends Controller
     {
         // if (!isset($request))
 
+        // dd($request);
         $validatedData = $request->validate([
             'id' => 'string|required',
-            'deskripsi' => 'string|required',
+            // 'deskripsi' => 'string|required',
             'input1' => 'string',
             'input1_check' => 'string',
             'input2' => 'string',
@@ -186,33 +188,36 @@ class SuratController extends Controller
             'input10' => 'string',
             'input10_check' => 'string',
             'message' => 'string',
-            'status_surat' => 'string'
+            'status_surat' => 'string',
+            'target_pic' => 'string'
         ]);
 
         $surat = Surat::findOrFail($validatedData['id']);
-
         $surat->status_revisi = '0';
-        $surat->deskripsi = $validatedData['deskripsi'];
-        if (isset ($validatedData['input1_check']))
+        // $surat->deskripsi = $validatedData['deskripsi'];
+        if (isset($validatedData['input1_check']))
             $surat->input1 = $validatedData['input1'];
-        if (isset ($validatedData['input2_check']))
+        if (isset($validatedData['input2_check']))
             $surat->input2 = $validatedData['input2'];
-        if (isset ($validatedData['input3_check']))
+        if (isset($validatedData['input3_check']))
             $surat->input3 = $validatedData['input3'];
-        if (isset ($validatedData['input4_check']))
+        if (isset($validatedData['input4_check']))
             $surat->input4 = $validatedData['input4'];
-        if (isset ($validatedData['input5_check']))
+        if (isset($validatedData['input5_check']))
             $surat->input5 = $validatedData['input5'];
-        if (isset ($validatedData['input6_check']))
+        if (isset($validatedData['input6_check']))
             $surat->input6 = $validatedData['input6'];
-        if (isset ($validatedData['input7_check']))
+        if (isset($validatedData['input7_check']))
             $surat->input7 = $validatedData['input7'];
-        if (isset ($validatedData['input8_check']))
+        if (isset($validatedData['input8_check']))
             $surat->input8 = $validatedData['input8'];
-        if (isset ($validatedData['input9_check']))
+        if (isset($validatedData['input9_check']))
             $surat->input9 = $validatedData['input9'];
-        if (isset ($validatedData['input10_check']))
+        if (isset($validatedData['input10_check']))
             $surat->input10 = $validatedData['input10'];
+
+        if (isset($validatedData['target_pic']))
+            $surat->id_pic = $validatedData['target_pic'];
 
         $statusSurat = new StatusSuratController;
         $statusSurat->createStatusSurat($validatedData);
@@ -220,5 +225,93 @@ class SuratController extends Controller
         $surat->save();
 
         return redirect('/detailSuratAdmin' . '/' . $validatedData['id'])->with('success', 'Data berhasil diubah');
+    }
+
+    public function suratPic()
+    {
+        $surats = Surat::with('pic')->where('status', '0')->paginate(8);
+
+        return view('pic.surat.index', [
+            "title" => "SSC | Surat PIC",
+            "surats" => $surats
+        ]);
+    }
+
+    public function detailSuratPic(Surat $surat)
+    {
+        // dd($surat);
+        // $is_revisi = ($surat->status_revisi == '1' ? true : false);
+        $revisis = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->get();
+        $revisi_now = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->orderBy('created_at', 'desc')->get();
+        $pic = Pic::findOrFail($surat->id_pic);
+        // dd($pic);
+        // id_pic - relasi pic - | pic->id_admin
+        if ($surat->type == '1') {
+            return view('pic.surat.previewPic', [
+                "title" => "SSC | Detail Surat PIC",
+                "surat" => $surat,
+                // "is_revisi" => $is_revisi,
+                "revisi_now" => $revisi_now,
+                "revisis" => $revisis
+            ]);
+        } else
+            if ($surat->type != '1') {
+
+            }
+    }
+
+    public function updateSuratPic(Request $request)
+    {
+        // dd($request->input2);
+        $validatedData = $request->validate([
+            'id' => 'string|required',
+            // 'deskripsi' => 'string|required',
+            'input1' => 'string',
+            'input2' => 'string',
+            'input3' => 'string',
+            'input4' => 'string',
+            'input5' => 'string',
+            'input6' => 'string',
+            'input7' => 'string',
+            'input8' => 'string',
+            'input9' => 'string',
+            'input10' => 'string',
+            'message' => 'string',
+        ]);
+        // dd("asu");
+        $surat = Surat::findOrFail($validatedData['id']);
+
+        $surat->input1 = $validatedData['input1'];
+        $surat->input2 = $validatedData['input2'];
+        $surat->input3 = $validatedData['input3'];
+        $surat->input4 = $validatedData['input4'];
+        $surat->input5 = $validatedData['input5'];
+        $surat->input6 = $validatedData['input6'];
+        $surat->input7 = $validatedData['input7'];
+        $surat->input8 = $validatedData['input8'];
+        $surat->input9 = $validatedData['input9'];
+        $surat->input10 = $validatedData['input10'];
+
+
+        if ($request->status_surat == "setuju") {
+
+            // $surat->id_pic = $validatedData['target_pic'];
+            $pic = Pic::findOrFail($request->id_pic);
+            // dd($pic);
+            if ($pic->id === $pic->id_next_pic) {
+                $surat->id_pic = $pic->id;
+                $surat->status = "1";
+                $validatedData['status_surat'] = "5"; // selesai
+            } else {
+                $surat->id_pic = $pic->id_next_pic;
+                $validatedData['status_surat'] = "4";
+            }
+        }
+
+        $statusSurat = new StatusSuratController;
+        $statusSurat->createStatusSurat($validatedData);
+
+        $surat->save();
+        return redirect('/suratPic')->with('success', 'Data berhasil diubah');
     }
 }

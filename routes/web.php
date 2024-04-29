@@ -30,10 +30,23 @@ Route::group(['middleware' => ['auth:user']], function () {
 });
 
 Route::group(['middleware' => ['auth:admin']], function () {
+});
+
+Route::group(['middleware' => ['auth:admin', 'role:1']], function () {
     // Route::get('/', [DashboardController::class, 'index']);
     Route::get('/suratAdmin', [SuratController::class, 'suratAdmin']);
     Route::get('/detailSuratAdmin/{surat:id}', [SuratController::class, 'detailSuratAdmin']);
     Route::post('/updateSuratRequest', [SuratController::class, 'updateSuratRequest']);
+});
+
+Route::group(['middleware' => ['auth:admin', 'role:2']], function () {
+    // Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/suratPic', [SuratController::class, 'suratPic']);
+    Route::get('/detailSuratPic/{surat:id}', [SuratController::class, 'detailSuratPic']);
+    Route::post('/updateSuratPic', [SuratController::class, 'updateSuratPic']);
+    
+    // Route::get('/detailSuratAdmin/{surat:id}', [SuratController::class, 'detailSuratAdmin']);
+    // Route::post('/updateSuratRequest', [SuratController::class, 'updateSuratRequest']);
 });
 
 

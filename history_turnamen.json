@@ -1,0 +1,34 @@
+{
+    "chat_history": [
+        {
+            "id_sender": 1,
+            "id_receiver": 2,
+            "message": "Halo, saya ingin bertanya apakah ada potongan harga untuk produk yang saya beli secara grosir?",
+            "timestamp": "2024-03-25T10:15:00"
+        },
+        {
+            "id_sender": 2,
+            "id_receiver": 1,
+            "message": "Halo! Ya, kami menyediakan potongan harga untuk pembelian grosir. Berapa banyak produk yang Anda minati?",
+            "timestamp": "2024-03-25T10:17:00"
+        },
+        {
+            "id_sender": 1,
+            "id_receiver": 2,
+            "message": "Saya ingin membeli sekitar 50 pcs. Apakah bisa mendapatkan diskon?",
+            "timestamp": "2024-03-25T10:20:00"
+        },
+        {
+            "id_sender": 2,
+            "id_receiver": 1,
+            "message": "Tentu saja! Untuk pembelian lebih dari 30 pcs, kami memberikan diskon 10%. Silakan lanjutkan dengan proses pembelian dan kami akan memberikan diskon saat checkout.",
+            "timestamp": "2024-03-25T10:22:00"
+        },
+        {
+            "id_sender": 1,
+            "id_receiver": 2,
+            "message": "Baik, terima kasih atas informasinya!",
+            "timestamp": "2024-03-25T10:25:00"
+        }
+    ]
+}

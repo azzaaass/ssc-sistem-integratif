@@ -11,6 +11,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     {{-- JQuery --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
     {{-- Google font --}}
     <style>
@@ -98,6 +99,11 @@
                     <ul>
                         <li>
                             <a href="">
+                                <p class="block p-2 tx-gray text-sm font-normal">{{ Auth::user()->name }}</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
                                 <p class="block p-2 tx-gray text-sm font-normal">Profile</p>
                             </a>
                         </li>
@@ -123,18 +129,6 @@
             }
         }
 
-        // submenu / out page clicked
-        $(document).on("click", function(e) {
-            if (!$(e.target).closest("#menu-surat, #sub-menu-surat").length) {
-                $("#sub-menu-surat").addClass("hidden");
-            }
-        });
-        // submenu / out page clicked
-        $(document).on("click", function(e) {
-            if (!$(e.target).closest("#menu-pengajuan, #sub-menu-pengajuan").length) {
-                $("#sub-menu-pengajuan").addClass("hidden");
-            }
-        });
         // submenu / out page clicked
         $(document).on("click", function(e) {
             if (!$(e.target).closest("#menu-pusat-bantuan, #sub-menu-pusat-bantuan").length) {

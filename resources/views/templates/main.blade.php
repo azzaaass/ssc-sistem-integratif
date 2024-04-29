@@ -10,9 +10,11 @@
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     {{-- COLOR --}}
     <link rel="stylesheet" href="{{ asset('css/color.css') }}">
 </head>
+
 <body>
     <nav class="sticky top-0 z-20 bg-white dark:bg-gray-900 shadow">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 lg:px-10 xl:px-20">
@@ -114,7 +116,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="/history   " class="block p-2 tx-gray text-sm font-normal">History</a>
+                        <a href="/history" class="block p-2 tx-gray text-sm font-normal">History</a>
                     </li>
                 </ul>
             </div>
@@ -126,6 +128,11 @@
                     class="object-cover h-10 w-10 rounded-[50%]">
                 <div id="sub-menu-user" class="absolute hidden bg-white shadow mt-8 px-8 py-4">
                     <ul>
+                        <li>
+                            <a href="">
+                                <p class="block p-2 tx-gray text-sm font-normal">{{ Auth::user()->name }}</p>
+                            </a>
+                        </li>
                         <li>
                             <a href="">
                                 <p class="block p-2 tx-gray text-sm font-normal">Profile</p>
