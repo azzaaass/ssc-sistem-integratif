@@ -10,40 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    // halaman registrasi
-    public function registerForm()
+    public function login()
     {
-        return view('auth.register', [
-            "title" => "SSC | Register"
-        ]);
-    }
-
-    public function register(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed'
-        ]);
-
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => $validatedData['password']
-        ]);
-
-        Auth::login($user);
-        return redirect('/');
-    }
-
-    public function loginForm()
-    {
-        return view('auth.login', [
+        return view('user.auth', [
             "title" => "SSC | Login"
         ]);
     }
 
-    public function login(Request $request)
+    public function login_check(Request $request)
     {
         $credentials = $request->validate([
             'username' => 'required|string',
@@ -53,18 +27,18 @@ class AuthController extends Controller
         if (Auth::guard('user')->attempt($credentials)) { // remember disini
             return redirect('/');
         } else {
-            return redirect('/login')->with('error', 'Username atau password salah');
+            return redirect('/admin/login')->with('error', 'Username atau password salah');
         }
     }
 
-    public function loginAdminForm()
+    public function login_admin()
     {
-        return view('admin.auth.login', [
+        return view('staff.auth', [
             "title" => "SSC | Login Admin"
         ]);
     }
 
-    public function loginAdmin(Request $request)
+    public function login_admin_check(Request $request)
     {
         $credentials = $request->validate([
             'username' => 'required|string',
@@ -73,12 +47,12 @@ class AuthController extends Controller
 
         if (Auth::guard('admin')->attempt($credentials)) {
             if (Auth::guard('admin')->user()->role == "1") {
-                return redirect('/suratAdmin');
+                return redirect('/admin/surats');
             } else {
-                return redirect('/suratPic');
+                return redirect('/pic/surats');
             }
         } else {
-            return redirect('/loginAdmin')->with('error', 'Username atau password salah');
+            return redirect('/admin/login')->with('error', 'Username atau password salah');
         }
     }
 
