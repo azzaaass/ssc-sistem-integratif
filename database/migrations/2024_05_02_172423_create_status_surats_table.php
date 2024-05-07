@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pics', function (Blueprint $table) {
+        Schema::create('status_surats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_admin')->references('id')->on('admins');
-            $table->foreignId('type');
-            $table->string('deskripsi');
-            $table->string('tingkat');
-            $table->foreignId('id_next_pic');
+            $table->foreignId('id_surat')->references('id')->on('surats');
+            $table->foreignId('id_admin');
+            $table->string('status');
+            $table->string('message')->nullable();
+            $table->string('pic_name')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pics');
+        Schema::dropIfExists('status_surats');
     }
 };

@@ -20,45 +20,39 @@ use App\Http\Controllers\DashboardController;
 
 Route::group(['middleware' => ['auth:user']], function () {
     Route::get('/', [DashboardController::class, 'index']);
-    Route::get('/ruangan', [SuratController::class, 'ruangan']);
-    Route::post('/createSurat', [SuratController::class, 'createSurat']);
 
-    Route::get('/history', [SuratController::class, 'history'])->name('history');
-    Route::get('/detailSurat/{surat:id}', [SuratController::class, 'detailSurat']);
-    Route::post('/requestUpdateSurat', [SuratController::class, 'requestUpdateSurat']);
-    Route::get('/deleteSurat/{surat:id}', [SuratController::class, 'deleteSurat']);
-});
-
-Route::group(['middleware' => ['auth:admin']], function () {
+    // all surats
+    Route::get('/surats', [SuratController::class, 'history']);
+    Route::post('/surats', [SuratController::class, 'create_surat']);
+    Route::get('/surats/{surat:id}', [SuratController::class, 'detail_surat']);
+    Route::put('/surats', [SuratController::class, 'request_update_surat']);
+    Route::delete('/surats/{surat:id}', [SuratController::class, 'delete_surat']);
+    
+    // create surat
+    Route::get('/surats/create/ruangan', [SuratController::class, 'ruangan_index']);
+    Route::get('/surats/create/alat', [SuratController::class, 'alat_index']);
 });
 
 Route::group(['middleware' => ['auth:admin', 'role:1']], function () {
-    // Route::get('/', [DashboardController::class, 'index']);
-    Route::get('/suratAdmin', [SuratController::class, 'suratAdmin']);
-    Route::get('/detailSuratAdmin/{surat:id}', [SuratController::class, 'detailSuratAdmin']);
-    Route::post('/updateSuratRequest', [SuratController::class, 'updateSuratRequest']);
+    Route::get('/admin/surats', [SuratController::class, 'admin_surat']);
+    Route::get('/admin/surats/{surat:id}', [SuratController::class, 'admin_detail_surat']);
+    Route::put('/admin/surats', [SuratController::class, 'update_surat_request']);
+    Route::delete('/admin/surats/{surat:id}', [SuratController::class, 'admin_delete_surat']);
 });
 
 Route::group(['middleware' => ['auth:admin', 'role:2']], function () {
-    // Route::get('/', [DashboardController::class, 'index']);
-    Route::get('/suratPic', [SuratController::class, 'suratPic']);
-    Route::get('/detailSuratPic/{surat:id}', [SuratController::class, 'detailSuratPic']);
-    Route::post('/updateSuratPic', [SuratController::class, 'updateSuratPic']);
-    
-    // Route::get('/detailSuratAdmin/{surat:id}', [SuratController::class, 'detailSuratAdmin']);
-    // Route::post('/updateSuratRequest', [SuratController::class, 'updateSuratRequest']);
+    Route::get('/pic/surats', [SuratController::class, 'pic_surat']);
+    Route::get('/pic/surats/{surat:id}', [SuratController::class, 'pic_detail_surat']);
+    Route::put('/pic/surats', [SuratController::class, 'update_surat_final']);
 });
 
-
 // Auth admin
-Route::get('/loginAdmin', [AuthController::class, 'loginAdminForm']);
-Route::post('/loginAdmin', [AuthController::class, 'loginAdmin'])->name('loginAdmin');
+Route::get('/admin/login', [AuthController::class, 'login_admin']);
+Route::post('/admin/login', [AuthController::class, 'login_admin_check']);
 
 // Auth user
-Route::get('/register', [AuthController::class, 'registerForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
-Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'login_check']);
 
 Route::get('/logout', [AuthController::class, 'logout']);
 

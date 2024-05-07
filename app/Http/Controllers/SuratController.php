@@ -12,14 +12,21 @@ use Illuminate\Support\Facades\Auth;
 
 class SuratController extends Controller
 {
-    public function ruangan()
+    public function ruangan_index()
     {
-        return view('surats.ruangan.index', [
+        return view('user.surats.ruangan.create', [
             "title" => "SSC | Peminjaman ruangan"
         ]);
     }
 
-    public function createSurat(Request $request)
+    public function alat_index()
+    {
+        return view('user.surats.alat.create', [
+            "title" => "SSC | Peminjaman alat"
+        ]);
+    }
+
+    public function create_surat(Request $request)
     {
         $validatedData = $request->validate([
             'estimasi' => 'string',
@@ -56,40 +63,51 @@ class SuratController extends Controller
         ]);
 
         if ($surat->wasRecentlyCreated) {
-            return redirect('/history')->with('success', 'Data berhasil dimasukkan');
+            return redirect('/surats')->with('success', 'Surat berhasil dibuat');
         } else {
-            return redirect('/history')->with('error', 'Gagal memasukkan data');
+            return redirect('/surats')->with('error', 'Surat gagal dibuat');
         }
     }
 
     public function history()
     {
         $surats = User::find(Auth::id())->surat()->with('tipe')->where('status', '0')->paginate(8);
-        return view('history.index', [
+        return view('user.history', [
             "title" => "SSC | History",
             "surats" => $surats
         ]);
     }
 
-    public function detailSurat(Surat $surat)
+    public function detail_surat(Surat $surat)
     {
-        // Peminjaman Ruangan
+        $antrean_surat = Surat::where('created_at', '<', $surat->created_at)->count() + 1;
         $is_revisi = ($surat->status_revisi == '1' ? true : false);
         $revisis = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->get();
-        $revisi_now = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->orderBy('created_at', 'desc')->limit(1)->get();
-        // dd(isset($revisi[0]));
+        $revisi_now = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->orderBy('created_at', 'desc')->first();
+
+        // Peminjaman Ruangan
         if ($surat->type == '1') {
-            return view('surats.ruangan.preview', [
-                "title" => "SSC | Detail Surat",
+            return view('user.surats.ruangan.preview', [
+                "title" => "SSC | Detail Surat Ruangan",
                 "surat" => $surat,
                 "is_revisi" => $is_revisi,
                 "revisis" => $revisis,
-                "revisi_now" => $revisi_now
+                "revisi_now" => $revisi_now,
+                "antrean_surat" => $antrean_surat,
+            ]);
+        } else if ($surat->type == '2') {
+            return view('user.surats.alat.preview', [
+                "title" => "SSC | Detail Surat Alat",
+                "surat" => $surat,
+                "is_revisi" => $is_revisi,
+                "revisis" => $revisis,
+                "revisi_now" => $revisi_now,
+                "antrean_surat" => $antrean_surat,
             ]);
         }
     }
 
-    public function requestUpdateSurat(Request $request)
+    public function request_update_surat(Request $request)
     {
         $validatedData = $request->validate([
             'id' => 'string|required',
@@ -123,50 +141,58 @@ class SuratController extends Controller
 
         $surat->save();
 
-        return redirect('/detailSurat' . '/' . $validatedData['id'])->with('success', 'Data berhasil diubah');
+        return redirect('/surats' . '/' . $validatedData['id'])->with('success', 'Data berhasil diubah');
     }
 
-    public function deleteSurat(Surat $surat)
+    public function delete_surat(Surat $surat)
     {
         $surat->delete();
-        return redirect('/history')->with('success', 'Data berhasil dihapus');
+        return redirect('/surats')->with('success', 'Data berhasil dihapus');
     }
 
 
-    public function suratAdmin()
+    public function admin_surat()
     {
         $surats = Surat::where('status', '0')->paginate(8);
-        return view('admin.surat.index', [
+        return view('staff.admin.history', [
             "title" => "SSC | Surat Admin",
+            "history_url" => "/surats/admin",
             "surats" => $surats
         ]);
     }
 
-    public function detailSuratAdmin(Surat $surat)
+    public function admin_detail_surat(Surat $surat)
     {
+        $antrean_surat = Surat::where('created_at', '<', $surat->created_at)->count() + 1;
         $is_revisi = ($surat->status_revisi == '1' ? true : false);
         $revisis = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->get();
-        $revisi_now = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->orderBy('created_at', 'desc')->get();
+        $revisi_now = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->orderBy('created_at', 'desc')->first();
 
         if ($surat->type == '1') {
-            return view('admin.surat.previewAdmin', [
-                "title" => "SSC | Detail Surat Admin",
+            return view('staff.admin.surats.ruangan.preview', [
+                "title" => "SSC | Detail Surat Ruangan (Admin)",
                 "surat" => $surat,
                 "is_revisi" => $is_revisi,
                 "revisi_now" => $revisi_now,
-                "revisis" => $revisis
+                "revisis" => $revisis,
+                "antrean_surat" => $antrean_surat,
+            ]);
+        } else if ($surat->type == '2') {
+            return view('staff.admin.surats.alat.preview', [
+                "title" => "SSC | Detail Surat Alat (Admin)",
+                "surat" => $surat,
+                "is_revisi" => $is_revisi,
+                "revisi_now" => $revisi_now,
+                "revisis" => $revisis,
+                "antrean_surat" => $antrean_surat,
             ]);
         }
     }
 
-    public function updateSuratRequest(Request $request)
+    public function update_surat_request(Request $request)
     {
-        // if (!isset($request))
-
-        // dd($request);
         $validatedData = $request->validate([
             'id' => 'string|required',
-            // 'deskripsi' => 'string|required',
             'input1' => 'string',
             'input1_check' => 'string',
             'input2' => 'string',
@@ -191,10 +217,8 @@ class SuratController extends Controller
             'status_surat' => 'string',
             'target_pic' => 'string'
         ]);
-
         $surat = Surat::findOrFail($validatedData['id']);
         $surat->status_revisi = '0';
-        // $surat->deskripsi = $validatedData['deskripsi'];
         if (isset($validatedData['input1_check']))
             $surat->input1 = $validatedData['input1'];
         if (isset($validatedData['input2_check']))
@@ -216,56 +240,73 @@ class SuratController extends Controller
         if (isset($validatedData['input10_check']))
             $surat->input10 = $validatedData['input10'];
 
-        if (isset($validatedData['target_pic']))
+        $pic = null;
+        if (isset($validatedData['target_pic'])) {
             $surat->id_pic = $validatedData['target_pic'];
+            $pic = Pic::with('admin')->findOrFail($validatedData['target_pic']);
+        }
 
         $statusSurat = new StatusSuratController;
-        $statusSurat->createStatusSurat($validatedData);
+        $statusSurat->createStatusSurat($validatedData, $pic);
 
         $surat->save();
-
-        return redirect('/detailSuratAdmin' . '/' . $validatedData['id'])->with('success', 'Data berhasil diubah');
+        return redirect('/admin/surats' . '/' . $validatedData['id'])->with('success', 'Data berhasil diubah');
     }
 
-    public function suratPic()
+    public function admin_delete_surat(Surat $surat)
     {
-        $surats = Surat::with('pic')->where('status', '0')->paginate(8);
+        $surat->delete();
+        return redirect('admin/surats')->with('success', 'Data berhasil dihapus');
+    }
 
-        return view('pic.surat.index', [
+    public function pic_surat()
+    {
+        $id_user = Auth::id();
+        $surats = Surat::with('pic')
+            ->where('status', '0')
+            ->whereHas('pic', function ($query) use ($id_user) {
+                $query->where('id_admin', '=', $id_user);
+            })
+            ->paginate(8);
+
+        return view('staff.pic.history', [
             "title" => "SSC | Surat PIC",
             "surats" => $surats
         ]);
     }
 
-    public function detailSuratPic(Surat $surat)
+    public function pic_detail_surat(Surat $surat)
     {
-        // dd($surat);
-        // $is_revisi = ($surat->status_revisi == '1' ? true : false);
+        $antrean_surat = Surat::where('created_at', '<', $surat->created_at)->count() + 1;
         $revisis = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->get();
-        $revisi_now = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->orderBy('created_at', 'desc')->get();
-        $pic = Pic::findOrFail($surat->id_pic);
-        // dd($pic);
-        // id_pic - relasi pic - | pic->id_admin
+        $revisi_now = StatusSurat::with('admin')->where('id_surat', '=', $surat->id)->orderBy('created_at', 'desc')->first();
+
         if ($surat->type == '1') {
-            return view('pic.surat.previewPic', [
+            return view('staff.pic.surats.ruangan.preview', [
                 "title" => "SSC | Detail Surat PIC",
                 "surat" => $surat,
-                // "is_revisi" => $is_revisi,
+                "is_revisi" => false,
                 "revisi_now" => $revisi_now,
-                "revisis" => $revisis
+                "revisis" => $revisis,
+                "antrean_surat" => $antrean_surat,
             ]);
-        } else
-            if ($surat->type != '1') {
+        } else if ($surat->type == '2') {
+            return view('staff.pic.surats.alat.preview', [
+                "title" => "SSC | Detail Surat PIC",
+                "surat" => $surat,
+                "is_revisi" => false,
+                "revisi_now" => $revisi_now,
+                "revisis" => $revisis,
+                "antrean_surat" => $antrean_surat,
+            ]);
 
-            }
+        }
     }
 
-    public function updateSuratPic(Request $request)
+    public function update_surat_final(Request $request)
     {
-        // dd($request->input2);
         $validatedData = $request->validate([
             'id' => 'string|required',
-            // 'deskripsi' => 'string|required',
             'input1' => 'string',
             'input2' => 'string',
             'input3' => 'string',
@@ -278,7 +319,6 @@ class SuratController extends Controller
             'input10' => 'string',
             'message' => 'string',
         ]);
-        // dd("asu");
         $surat = Surat::findOrFail($validatedData['id']);
 
         $surat->input1 = $validatedData['input1'];
@@ -292,26 +332,28 @@ class SuratController extends Controller
         $surat->input9 = $validatedData['input9'];
         $surat->input10 = $validatedData['input10'];
 
-
+        $pic = null;
         if ($request->status_surat == "setuju") {
-
-            // $surat->id_pic = $validatedData['target_pic'];
             $pic = Pic::findOrFail($request->id_pic);
-            // dd($pic);
             if ($pic->id === $pic->id_next_pic) {
                 $surat->id_pic = $pic->id;
                 $surat->status = "1";
-                $validatedData['status_surat'] = "5"; // selesai
+                $validatedData['status_surat'] = "5"; // status:selesai
             } else {
                 $surat->id_pic = $pic->id_next_pic;
                 $validatedData['status_surat'] = "4";
+
+                $pic = Pic::with('admin')->findOrFail($surat->id_pic);
             }
+        } else {
+            $surat->id_pic = null;
+            $validatedData['status_surat'] = "6"; // status:ditolak
         }
 
         $statusSurat = new StatusSuratController;
-        $statusSurat->createStatusSurat($validatedData);
+        $statusSurat->createStatusSurat($validatedData, $pic);
 
         $surat->save();
-        return redirect('/suratPic')->with('success', 'Data berhasil diubah');
+        return redirect('/pic/surats')->with('success', 'Data berhasil diubah');
     }
 }

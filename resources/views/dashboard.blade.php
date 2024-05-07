@@ -1,4 +1,4 @@
-@extends('templates.main')
+@extends('templates.user.navbar')
 
 @section('container')
     <div class="flex justify-evenly w-full">

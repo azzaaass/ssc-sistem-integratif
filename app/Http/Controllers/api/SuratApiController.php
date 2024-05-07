@@ -13,18 +13,10 @@ class SuratApiController extends Controller
     {
         try {
             $userId = $request->header('X-User-ID');
-            $picId = $request->header('X-Pic-ID');
+            $staffId = $request->header('X-Staff-ID');
             $search = $request->header('search');
             $status = $request->header('status');
             $pagination = $request->header('pagination');
-
-            // if (isset($search) && isset($status)) {
-            //     $surat = Surat::where('status', $status)->with('tipe')->where('id_user', $userId)->where('id', 'like', '%' . $search . '%')->get();
-            // } else if (isset($status)) {
-            //     $surat = Surat::where('status', $status)->with('tipe')->where('id_user', $userId)->get();
-            // } else {
-            //     $surat = Surat::all();
-            // }
 
             $surat = Surat::query();
             $surat = $surat->with('tipe');
@@ -33,8 +25,8 @@ class SuratApiController extends Controller
                 $surat = $surat->where('id_user', $userId);
             }
 
-            if (isset($picId)) {
-                $surat = $surat->where('id_pic', $picId);
+            if (isset($staffId)) {
+                $surat = $surat->where('id_pic', $staffId);
             }
 
             if (isset($search)) {

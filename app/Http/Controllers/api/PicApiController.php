@@ -13,10 +13,25 @@ class PicApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $pics = Pic::all();
+            // $pics = Pic::all();
+            $tingkat = $request->header('tingkat');
+            $type = $request->header('type');
+
+            $pics = Pic::query();
+
+            if (isset($tingkat)) {
+                $pics = $pics->where('tingkat', $tingkat);
+            }
+            
+            if (isset($type)) {
+                $pics = $pics->where('type', $type);
+            }
+
+            $pics = $pics->get();
+            
             return response()->json([
                 'success' => true,
                 'data' => $pics
