@@ -5,7 +5,6 @@
     @include('templates.history', ['surat_url' => '/admin/surats/'])
     <script>
         function getDataSurat() {
-            // var userId = '{{ Auth::id() }}';
 
             var search = $("#search").val();
             var status = $("#status").val();
@@ -43,7 +42,6 @@
                     console.error(xhr.responseText);
                 }
             });
-            // }
         }
     </script>
 @endsection

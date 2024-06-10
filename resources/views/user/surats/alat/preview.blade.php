@@ -106,7 +106,6 @@
                 <br>
                 <!-- Tombol Submit -->
                 <div class="flex w-full justify-between">
-
                     <button type="button" onclick="panelDelete()">
                         <div
                             class="text-sm bg-gradient-to-b from-[#ED212B] to-[#B6272C] hover:to-[#ED212B] text-white font-semibold py-2 px-10 rounded focus:outline-none focus:shadow-outline">

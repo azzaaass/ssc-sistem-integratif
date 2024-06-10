@@ -1,24 +1,13 @@
 @extends('templates.user.navbar')
 
 @section('container')
-    {{-- @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif --}}
     <div class="max-w-xl mx-auto bg-white shadow-md rounded-lg px-20 py-14">
         <form action="/surats" method="POST">
             @csrf
             <!-- Nama Peminjam -->
             <div class="mt-5">
                 <label for="nama_peminjam" class="block tx-gray text-sm font-semibold mb-1.5">Nama Peminjam</label>
-                <input type="text" id="nama_peminjam" name="input1" value="asu" required
+                <input type="text" id="nama_peminjam" name="input1" value="" required
                     class="text-sm appearance-none border border-gray-400 rounded w-full py-2 px-3 tx-gray leading-tight focus:border-[#C16A0B] focus:outline-none">
             </div>
 

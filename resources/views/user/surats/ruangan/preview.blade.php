@@ -107,7 +107,7 @@
                 <br>
                 <br>
                 <!-- Tombol Submit -->
-                @if ($revisi_now->status != '5')
+                @if (isset($revisi_now->status) ? $revisi_now->status!= '5' : true)
                     <div class="flex w-full justify-between">
                         <button type="button" onclick="panelDelete()">
                             <div

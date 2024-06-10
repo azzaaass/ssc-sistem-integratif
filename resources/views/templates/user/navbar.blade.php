@@ -13,10 +13,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     {{-- COLOR --}}
     <link rel="stylesheet" href="{{ asset('css/color.css') }}">
+    {{-- FLOWBITE --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 </head>
 
 <body>
-    <nav class="sticky top-0 z-20 bg-white dark:bg-gray-900 shadow">
+    <nav class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 lg:px-10 xl:px-20">
             <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="{{ asset('images/logo-telu.png') }}" alt="logo telkom university" class="w-5">
@@ -97,11 +99,16 @@
                     </li>
                     <li>
                         <p id="menu-pusat-bantuan" class="block p-2 tx-gray text-sm font-normal"
-                            onclick="menu_clicked('pusat-bantuan')">Pusat bantuan
+                            onclick="menu_clicked('pusat-bantuan')">Pusat informasi
                             <i class="fa-solid fa-angle-down"></i>
                         </p>
                         <div id="sub-menu-pusat-bantuan" class="hidden absolute bg-white shadow mt-8 p-4">
                             <ul>
+                                <li>
+                                    <a href="/berita">
+                                        <p class="block p-2 tx-gray text-sm font-normal">Berita</p>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="">
                                         <p class="block p-2 tx-gray text-sm font-normal">Kontak Admin</p>
@@ -186,7 +193,6 @@
             }
         });
     </script>
-    <style>
-
-    </style>
+    {{-- FLOWBITE --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </body>

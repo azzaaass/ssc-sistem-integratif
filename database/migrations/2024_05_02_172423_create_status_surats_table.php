@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('status_surats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_surat')->references('id')->on('surats');
+            $table->foreignId('id_surat')->references('id')->on('surats')->onDelete('cascade');
             $table->foreignId('id_admin');
             $table->string('status');
             $table->string('message')->nullable();
