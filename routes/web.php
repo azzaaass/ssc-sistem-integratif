@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\DashboardController;
@@ -31,6 +33,9 @@ Route::group(['middleware' => ['auth:user']], function () {
     // create surat
     Route::get('/surats/create/ruangan', [SuratController::class, 'ruangan_index']);
     Route::get('/surats/create/alat', [SuratController::class, 'alat_index']);
+
+    // news
+    Route::get('/berita', [BeritaController::class, 'index']);
 });
 
 Route::group(['middleware' => ['auth:admin', 'role:1']], function () {

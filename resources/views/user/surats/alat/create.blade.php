@@ -7,7 +7,7 @@
         <!-- Nama Peminjam -->
         <div class="mt-5">
             <label for="nama_peminjam" class="block tx-gray text-sm font-semibold mb-1.5">Nama Peminjam</label>
-            <input type="text" id="nama_peminjam" name="input1" value="asu" required
+            <input type="text" id="nama_peminjam" name="input1" value="" required
                 class="text-sm appearance-none border border-gray-400 rounded w-full py-2 px-3 tx-gray leading-tight focus:border-[#C16A0B] focus:outline-none">
         </div>
 
