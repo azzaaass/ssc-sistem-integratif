@@ -110,7 +110,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/kontak">
                                         <p class="block p-2 tx-gray text-sm font-normal">Kontak Admin</p>
                                     </a>
                                 </li>

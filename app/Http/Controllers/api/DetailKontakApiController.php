@@ -11,7 +11,7 @@ class DetailKontakApiController extends Controller
     public function index(Request $request)
     {
         try {
-            $kontakId = $request->query('kontakId');
+            $kontakId =$request->query('kontakId');
 
             $detailKontaks = DetailKontak::query();
             

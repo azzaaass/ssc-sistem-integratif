@@ -7,6 +7,8 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DetailKontakController;
+use App\Http\Controllers\KontakController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +40,13 @@ Route::group(['middleware' => ['auth:user']], function () {
     Route::get('/berita', [BeritaController::class, 'index']);
 
     // kontak admin
+    Route::get('/kontak', [KontakController::class, 'index']);
+    Route::post('/kontak', [KontakController::class, 'store']);
     
+    // detail kontak admin
+    Route::get('/detailKontak/{id}', [DetailKontakController::class, 'index']);
+    Route::post('/detailKontak', [DetailKontakController::class, 'store']);
+
 });
 
 Route::group(['middleware' => ['auth:admin', 'role:1']], function () {
