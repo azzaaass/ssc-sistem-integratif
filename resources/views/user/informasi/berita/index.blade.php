@@ -3,34 +3,35 @@
 @section('container')
     <h1 class="mb-4 text-2xl font-extrabold text-gray-900 dark:text-white md:text-4xl lg:text-5xl"><span
             class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Ada apa</span> hari ini?</h1>
-    <p class="mb-4 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Telusuri berita harian melalui SSC news.</p>
+    <p class="mb-4 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Telusuri berita harian melalui SSC news.
+    </p>
 
     <div id="indicators-carousel" class="relative w-full" data-carousel="static">
         <!-- Carousel wrapper -->
         <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
             <!-- Item 1 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-                <img src="https://source.unsplash.com/random/?education?sig=motivation"
+                <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             </div>
             <!-- Item 2 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://source.unsplash.com/random/?education?sig=learn"
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             </div>
             <!-- Item 3 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://source.unsplash.com/random/?education?sig=graduate"
+                <img src="https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             </div>
             <!-- Item 4 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://source.unsplash.com/random/?education?sig=gicveup"
+                <img src="https://images.unsplash.com/photo-1477281765962-ef34e8bb0967?q=80&w=1933&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             </div>
             <!-- Item 5 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="https://source.unsplash.com/random/?education?sig=success"
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             </div>
         </div>
@@ -78,9 +79,11 @@
     <br>
     {{-- FILL WITH JS --}}
     <div id="container-news" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
     </div>
     {{-- FILL WITH JS --}}
     <script>
+        // bakal aktif waktu dokument udah load
         $(document).ready(function() {
             getNews();
         });
@@ -89,10 +92,10 @@
             $("#container-news").empty();
             $.ajax({
                 type: "GET",
-                url: "https://newsapi.org/v2/everything?q=education&apiKey=829761b4e9fc4bbb8b68b138149b43b1&pageSize=4&page=1",
+                url: "https://newsapi.org/v2/everything?q=education&apiKey=829761b4e9fc4bbb8b68b138149b43b1&pageSize=4&page=2",
                 dataType: "json",
                 success: function(response) {
-                    console.log('hallo dek');
+                    
                     $.each(response.articles, function(key, value) {
                         $("#container-news").append(
                             '<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">' +

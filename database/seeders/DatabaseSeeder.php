@@ -2,15 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Alat;
+use App\Models\DetailKontak;
 use App\Models\Pic;
-use App\Models\TipeSurat;
+use App\Models\Alat;
 use App\Models\Type;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Kontak;
 use App\Models\Ruangan;
-use App\Models\StatusSuratStatus;
+use App\Models\TipeSurat;
 use Illuminate\Database\Seeder;
+use App\Models\StatusSuratStatus;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
@@ -336,5 +338,20 @@ class DatabaseSeeder extends Seeder
             "name" => "Meja",
             "kode_alat" => "meja",
         ]);
+
+        // KONTAK
+        Kontak::create([
+            "id_user" => "1",
+            "status" => "proses",
+            "topic" => "Surat saya lama di acc"
+        ]);
+
+        // DETAIL KONTAK
+        DetailKontak::create([
+            "id_kontak" => "1",
+            "id_user" => "1",
+            "message" => "Kemarin waktu bikin aku gabisa kak"
+        ]);
+
     }
 }
