@@ -36,6 +36,9 @@ Route::group(['middleware' => ['auth:user']], function () {
 
     // news
     Route::get('/berita', [BeritaController::class, 'index']);
+
+    // kontak admin
+    
 });
 
 Route::group(['middleware' => ['auth:admin', 'role:1']], function () {

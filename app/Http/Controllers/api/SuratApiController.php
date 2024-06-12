@@ -47,12 +47,55 @@ class SuratApiController extends Controller
             return response()->json([
                 'success' => true,
                 'surats' => $surat
-            ]);
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve data from database.'
             ], 500);
         }
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id_user' => 'string',
+            'estimasi' => 'string',
+            'type' => 'string|required',
+            'input1' => 'string',
+            'input2' => 'string',
+            'input3' => 'string',
+            'input4' => 'string',
+            'input5' => 'string',
+            'input6' => 'string',
+            'input7' => 'string',
+            'input8' => 'string',
+            'input9' => 'string',
+            'input10' => 'string'
+        ]);
+
+        $surat = Surat::create([
+            'id_user' => $validatedData['id_user'],
+            'id_admin' => '0',
+            'estimasi' => $validatedData['estimasi'],
+            'status' => '0',
+            'type' => $validatedData['type'],
+            'input1' => $validatedData['input1'],
+            'input2' => $validatedData['input2'],
+            'input3' => $validatedData['input3'],
+            'input4' => $validatedData['input4'],
+            'input5' => $validatedData['input5'],
+            'input6' => $validatedData['input6'],
+            'input7' => $validatedData['input7'],
+            'input8' => $validatedData['input8'],
+            'input9' => $validatedData['input9'],
+            'input10' => $validatedData['input10'],
+            'status_revisi' => '0'
+        ]);
+         // Return response
+         return response()->json([
+            'success' => 'true',
+            'surats' => $surat,
+        ], 201);
     }
 }
